@@ -200,13 +200,18 @@ print(
 # 6. CONNECT TO POSTGRESQL
 # =========================================================
 
-connection = psycopg2.connect(
-    host="localhost",
-    port="5432",
-    database="job_market_db",
-    user="postgres",
-password=os.environ.get("POSTGRES_PASSWORD")
-)
+database_url = os.environ.get("DATABASE_URL")
+
+if database_url:
+    connection = psycopg2.connect(database_url)
+else:
+    connection = psycopg2.connect(
+        host="localhost",
+        port="5432",
+        database="job_market_db",
+        user="postgres",
+        password=os.environ.get("POSTGRES_PASSWORD")
+    )
 
 cursor = connection.cursor()
 
